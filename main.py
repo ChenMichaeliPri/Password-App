@@ -13,3 +13,6 @@ class RootWidget(ScreenManager):
 class MainApp(App):
     def build(self):
         return RootWidget()
+
+if __name__ == "__main__":
+    MainApp().run()
