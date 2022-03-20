@@ -6,13 +6,21 @@
             Label:
                 text: "Password Manager"
             TextInput:
-                hint_text: "ID - Password"
+                id: user_id
+                hint_text: "User id"
+            TextInput:
+                id: user_password
+                hint_text: "User Password"
             Button:
                 text: "Login"
+                on_press: root.login(root.ids.user_id.text, root.ids.user_password.text)
+            Label:
+                id: login_wrong
+                text: ""
         GridLayout:
             cols: 2
             Button:
-                text: "Forgot Password?"
+                text: "Forgot Password ?"
             Button:
                 text: "Sign Up"
                 on_press: root.sign_up()
@@ -21,13 +29,21 @@
     GridLayout:
         cols: 1
         Label:
+            text: "Insert your new id below :"
+        TextInput:
+            id: id
+            hint_text: "New id"
+        Label:
             text: "Insert your new password below :"
         TextInput:
             id: password
             hint_text: "New password"
         Button:
             text: "Submit"
-            on_press: root.add_user(root.ids.password.text)
+            on_press: root.add_user(root.ids.id.text, root.ids.password.text)
+        Label:
+            id: username_taken
+            text: ""
 
 <SignUpScreenSuccess>:
     GridLayout:
@@ -41,6 +57,9 @@
 <LoginScreenSuccess>:
     GridLayout:
         cols: 1
+        Button:
+            text: "Logout"
+            on_press: root.log_out()
         Label:
             text: "Extract required password :"
         TextInput:
@@ -49,8 +68,12 @@
         Button:
             text: "Submit"
             on_press: root.extract_password(root.ids.required_password.text)
+        Label:
+            id: required_password_output
+            text: ""
     GridLayout:
         cols: 1
+
         Label:
             text: "Add new password :"
         TextInput:
