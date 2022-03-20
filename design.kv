@@ -3,27 +3,50 @@
         cols: 1
         GridLayout:
             cols: 1
+            padding: 15, 15
+            spacing: 10, 10
             Label:
                 text: "Password Manager"
-            TextInput:
-                id: user_id
-                hint_text: "User id"
-            TextInput:
-                id: user_password
-                hint_text: "User Password"
-            Button:
-                text: "Login"
-                on_press: root.login(root.ids.user_id.text, root.ids.user_password.text)
+                font_size: '30sp'
+            RelativeLayout:
+                TextInput:
+                    id: user_id
+                    hint_text: "User id"
+                    size_hint: 0.8, 0.5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            RelativeLayout:
+                TextInput:
+                    id: user_password
+                    password: True
+                    hint_text: "User Password"
+                    size_hint: 0.8, 0.5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
             Label:
                 id: login_wrong
                 text: ""
+            RelativeLayout:
+                Button:
+                    text: "Login"
+                    size_hint: 0.3, 0.5
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                    on_press: root.login(root.ids.user_id.text, root.ids.user_password.text)
+                    opacity: 1 if self.state == 'normal' else 0.5
         GridLayout:
             cols: 2
+            size_hint: 0.2, 0.2
+            padding: 10, 10
+            spacing: 10, 0
             Button:
                 text: "Forgot Password ?"
+                background_color: 1, 1, 1, 0
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 0.1, 0.7, 1, 1
             Button:
                 text: "Sign Up"
+                background_color: 1, 1, 1, 0
                 on_press: root.sign_up()
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 0.1, 0.7, 1, 1
 
 <SignUpScreen>:
     GridLayout:
@@ -57,34 +80,36 @@
 <LoginScreenSuccess>:
     GridLayout:
         cols: 1
-        Button:
-            text: "Logout"
-            on_press: root.log_out()
-        Label:
-            text: "Extract required password :"
-        TextInput:
-            id: required_password
-            hint_text: "Fill in the required password"
-        Button:
-            text: "Submit"
-            on_press: root.extract_password(root.ids.required_password.text)
-        Label:
-            id: required_password_output
-            text: ""
-    GridLayout:
-        cols: 1
+        GridLayout:
+            cols: 1
+            Button:
+                text: "Logout"
+                on_press: root.log_out()
+            Label:
+                text: "Extract required password :"
+            TextInput:
+                id: required_password
+                hint_text: "Fill in the required password"
+            Button:
+                text: "Submit"
+                on_press: root.extract_password(root.ids.required_password.text)
+            Label:
+                id: required_password_output
+                text: ""
+        GridLayout:
+            cols: 1
 
-        Label:
-            text: "Add new password :"
-        TextInput:
-            id: new_password_name
-            hint_text: "Fill in the password's purpose / name"
-        TextInput:
-            id: new_password
-            hint_text: "Fill in the password"
-        Button:
-            text: "Submit"
-            on_press: root.add_password(root.ids.new_password_name.text, root.ids.new_password.text)
+            Label:
+                text: "Add new password :"
+            TextInput:
+                id: new_password_name
+                hint_text: "Fill in the password's purpose / name"
+            TextInput:
+                id: new_password
+                hint_text: "Fill in the password"
+            Button:
+                text: "Submit"
+                on_press: root.add_password(root.ids.new_password_name.text, root.ids.new_password.text)
 
 <RootWidget>:
     LoginScreen:
