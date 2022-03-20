@@ -38,6 +38,31 @@
             text: "Back to Login page"
             on_press: root.go_to_login()
 
+<LoginScreenSuccess>:
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Extract required password :"
+        TextInput:
+            id: required_password
+            hint_text: "Fill in the required password"
+        Button:
+            text: "Submit"
+            on_press: root.extract_password(root.ids.required_password.text)
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Add new password :"
+        TextInput:
+            id: new_password_name
+            hint_text: "Fill in the password's purpose / name"
+        TextInput:
+            id: new_password
+            hint_text: "Fill in the password"
+        Button:
+            text: "Submit"
+            on_press: root.add_password(root.ids.new_password_name.text, root.ids.new_password.text)
+
 <RootWidget>:
     LoginScreen:
         name: "login_screen"
@@ -45,3 +70,5 @@
         name: "sign_up_screen"
     SignUpScreenSuccess:
         name: "sign_up_screen_success"
+    LoginScreenSuccess:
+        name: "login_screen_success"

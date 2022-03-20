@@ -5,6 +5,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 import json
 from datetime import datetime
 
+# Current Logged in user
+current_logged_user = None
+
 # Synching with the kivi file
 Builder.load_file('design.kv')
 
@@ -28,7 +31,15 @@ class SignUpScreen(Screen):
 
 class SignUpScreenSuccess(Screen):
     def go_to_login(self):
+        self.manager.transition.direction = 'right'
         self.manager.current = "login_screen"
+
+class LoginScreenSuccess(Screen):
+    def extract_password(self, required_password):
+        pass
+
+    def add_password(self, new_password_name, new_password):
+        pass
 
 class RootWidget(ScreenManager):
     pass
