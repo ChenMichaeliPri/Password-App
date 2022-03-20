@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 
 # Current Logged in user
-current_logged_user = None
+global current_logged_user
 
 # Synching with the kivi file
 Builder.load_file('design.kv')
@@ -21,6 +21,7 @@ class LoginScreen(Screen):
         with open("users.json") as file:
             users = json.load(file)
         if (id in users) and (users[id]["user_password"] == password):
+            global current_logged_user
             current_logged_user = id
             self.manager.current = "login_screen_success"
         else:
@@ -71,7 +72,7 @@ class LoginScreenSuccess(Screen):
         passwords[current_logged_user]["passwords"][new_password_name] = new_password
 
         with open("users.json", 'w') as file:
-            json.dump(users, file)
+            json.dump(passwords, file)
 
         required_password_output = "New password added successfully"
 
