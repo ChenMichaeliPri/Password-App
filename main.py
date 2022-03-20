@@ -14,14 +14,20 @@ class LoginScreen(Screen):
         self.manager.current = "sign_up_screen"
 
 class SignUpScreen(Screen):
+    # Adding user to json file database and documenting creation time
     def add_user(self, userPassword):
         with open("users.json") as file:
             users = json.load(file)
 
-        users[userPassword] = {'userPassword': userPassword, 'created': datetime.now().strftime("%Y-%m-%d %H-%M-%S")}
+        users["User: "+str(len(users)+1)] = {'userPassword': userPassword, 'created': datetime.now().strftime("%Y-%m-%d %H-%M-%S")}
 
         with open("users.json", 'w') as file:
             json.dump(users, file)
+            # Transfers user to update page on successful regestriation
+            self.manager.current = "sign_up_screen_success"
+
+class SignUpScreenSuccess(Screen):
+    pass
 
 class RootWidget(ScreenManager):
     pass

@@ -29,9 +29,18 @@
             text: "Submit"
             on_press: root.add_user(root.ids.password.text)
 
+<SignUpScreenSuccess>:
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Sign up completed successfully!"
+        Button:
+            text: "Back to Login page"
+
 <RootWidget>:
     LoginScreen:
         name: "login_screen"
-
-    SignUpScreen
+    SignUpScreen:
         name: "sign_up_screen"
+    SignUpScreenSuccess:
+        name: "sign_up_screen_success"
