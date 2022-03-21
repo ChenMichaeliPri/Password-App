@@ -4,18 +4,18 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 import json
 from datetime import datetime
-from abc import ABC, abstractmethod
+import random
 
-# Current Logged in user
+# Current Logged in user and variable for forgotten password restoration
 global current_logged_user
+global random_pass_name
 
 # Synching with the kivi file
 Builder.load_file('design.kv')
 
 # Abstract class to avoid code duplication
 
-class CommonMethods(ABC):
-    @abstractmethod
+class CommonMethods():
     def go_to_login(self):
         self.manager.transition.direction = 'right'
         self.manager.current = "login_screen"
@@ -25,6 +25,9 @@ class CommonMethods(ABC):
 class LoginScreen(Screen):
     def sign_up(self):
         self.manager.current = "sign_up_screen"
+
+    def forgot_password(self):
+        self.manager.current = "forgot_password"
 
     def login(self, id, password):
         with open("users.json") as file:
@@ -57,8 +60,34 @@ class SignUpScreen(Screen, CommonMethods):
                 self.manager.current = "sign_up_screen_success"
 
 class SignUpScreenSuccess(Screen, CommonMethods):
+    pass
 
 class ForgotPassword(Screen, CommonMethods):
+    def generate_question(self, user_id):
+        with open("users.json") as file:
+            users = json.load(file)
+
+        if (user_id not in users) or (user_id == ""):
+            self.ids.restore_password_question.text = "Please check the submitted user name"
+
+        elif (user_id in users):
+            global current_logged_user
+            global random_pass_name
+            current_logged_user = user_id
+            random_pass_name = random.choice(list(users[user_id]["passwords"]))
+            self.ids.restore_password_question.text = "What is the password of " + random_pass_name + " ?"
+
+    def answer_question(self, answer):
+        global current_logged_user
+        global random_pass_name
+
+        with open("users.json") as file:
+            users = json.load(file)
+
+        if users[current_logged_user]["passwords"][random_pass_name] == answer:
+            self.ids.restored_password.text = "Your password is: " + users[current_logged_user]["user_password"]
+        else:
+            self.ids.restored_password.text = "     Your password is wrong,\n you can try generating a new question"
 
 class LoginScreenSuccess(Screen):
     def log_out(self):

@@ -70,6 +70,7 @@
             Button:
                 text: "Forgot Password ?"
                 background_color: 1, 1, 1, 0
+                on_press: root.forgot_password()
                 opacity: 1 if self.state == 'normal' else 0.5
                 color: 1, 1, 1, 1
             RelativeLayout:
@@ -188,18 +189,76 @@
             size: self.size
     GridLayout:
         cols: 1
+        padding: 15, 15
+        spacing: 10, 10
+        RelativeLayout:
+            Button:
+                text: "Back to Login page"
+                background_color: 1, 1, 1, 0
+                on_press: root.go_to_login()
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 1, 1, 1, 1
+                pos_hint: {'center_x': 0.78, 'center_y': 0.7}
         Label:
-            text: "Sign up completed\n\n     successfully!"
+            text: "Restore your password"
             bold: True
             font_size: '20sp'
         RelativeLayout:
+            TextInput:
+                id: username
+                hint_text: "Fill in your user name"
+                size_hint: 0.7, 0.55
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                background_color: 1, 1, 1, 0
+                foreground_color: [1, 1, 1, 1]
+                hint_text_color: [1, 1, 1, 1]
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        points: self.x + 8, self.y, self.x + self.width, self.y
+                        width: 1
+        RelativeLayout:
             Button:
-                text: "Login page"
-                on_press: root.go_to_login()
+                text: "Generate question"
+                on_press: root.generate_question(root.ids.username.text)
                 background_size_hint: 0.1, 0.1
                 color: 36/255, 117/255, 173/255, 0.8
                 bold: True
-                size_hint: 0.35, 0.2
+                size_hint: 0.4, 0.2
+                pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                opacity: 1 if self.state == 'normal' else 0.5
+                background_normal: ''
+                background_color: 255/255, 215/255, 0, 0.8
+        Label:
+            id: restore_password_question
+            text: ""
+        RelativeLayout:
+            TextInput:
+                id: question_answer
+                hint_text: "Fill in the password"
+                size_hint: 0.7, 0.55
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                background_color: 1, 1, 1, 0
+                foreground_color: [1, 1, 1, 1]
+                hint_text_color: [1, 1, 1, 1]
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        points: self.x + 8, self.y, self.x + self.width, self.y
+                        width: 1
+        Label:
+            id: restored_password
+            text: ""
+        RelativeLayout:
+            Button:
+                text: "Answer question"
+                on_press: root.answer_question(root.ids.question_answer.text)
+                background_size_hint: 0.1, 0.1
+                color: 36/255, 117/255, 173/255, 0.8
+                bold: True
+                size_hint: 0.4, 0.2
                 pos_hint: {'center_x': 0.5, 'center_y': 0.4}
                 opacity: 1 if self.state == 'normal' else 0.5
                 background_normal: ''
