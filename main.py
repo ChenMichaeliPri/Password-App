@@ -33,8 +33,12 @@ class SignUpScreen(Screen):
         with open("users.json") as file:
             users = json.load(file)
 
-        if user_id in users:
+        if (user_id in users) or (user_id == ""):
             self.ids.username_taken.text = "Please select a different user id"
+
+        elif user_id == "" or user_password == "":
+            self.ids.username_taken.text = "Please insert valid user and password"
+
         else:
             users[user_id] = {'user_id': user_id, 'user_password': user_password, 'created': datetime.now().strftime("%Y-%m-%d %H-%M-%S"), 'passwords': dict()}
 
@@ -42,6 +46,10 @@ class SignUpScreen(Screen):
                 json.dump(users, file)
                 # Transfers user to update page on successful regestriation
                 self.manager.current = "sign_up_screen_success"
+
+    def go_to_login(self):
+        self.manager.transition.direction = 'right'
+        self.manager.current = "login_screen"
 
 class SignUpScreenSuccess(Screen):
     def go_to_login(self):

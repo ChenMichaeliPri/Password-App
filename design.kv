@@ -13,7 +13,7 @@
             spacing: 10, 10
             Label:
                 text: "Password Manager"
-                font_size: '35sp'
+                font_size: '32sp'
                 font_name: "Papyrus"
             RelativeLayout:
                 TextInput:
@@ -28,7 +28,7 @@
                         Color:
                             rgba: 1, 1, 1, 1
                         Line:
-                            points: self.x + 8, self.y, self.x + self.width - 20, self.y
+                            points: self.x + 8, self.y, self.x + self.width, self.y
                             width: 1
             RelativeLayout:
                 TextInput:
@@ -44,7 +44,7 @@
                         Color:
                             rgba: 1, 1, 1, 1
                         Line:
-                            points: self.x + 8, self.y, self.x + self.width - 20, self.y
+                            points: self.x + 8, self.y, self.x + self.width, self.y
                             width: 1
             Label:
                 id: login_wrong
@@ -52,11 +52,15 @@
             RelativeLayout:
                 Button:
                     text: "Login"
+                    color: 36/255, 117/255, 173/255, 0.8
+                    bold: True
                     size_hint: 0.3, 0.5
                     pos_hint: {'center_x': 0.5, 'center_y': 0.6}
                     on_press: root.login(root.ids.user_id.text, root.ids.user_password.text)
                     opacity: 1 if self.state == 'normal' else 0.5
-                    background_color: 1, 1, 1, 0
+                    background_normal: ''
+                    background_color: 255/255, 215/255, 0, 0.8
+
 
         GridLayout:
             cols: 2
@@ -68,34 +72,86 @@
                 background_color: 1, 1, 1, 0
                 opacity: 1 if self.state == 'normal' else 0.5
                 color: 1, 1, 1, 1
-            Button:
-                text: "Sign Up"
-                background_color: 1, 1, 1, 0
-                on_press: root.sign_up()
-                opacity: 1 if self.state == 'normal' else 0.5
-                color: 1, 1, 1, 1
+            RelativeLayout:
+                Button:
+                    text: "Sign up"
+                    background_color: 1, 1, 1, 0
+                    on_press: root.sign_up()
+                    opacity: 1 if self.state == 'normal' else 0.5
+                    color: 1, 1, 1, 1
 
 <SignUpScreen>:
+    canvas.before:
+        Color:
+            rgba: (36/255, 117/255, 173/255, 0.8)
+        Rectangle:
+            pos: self.pos
+            size: self.size
     GridLayout:
         cols: 1
         padding: 15, 15
         spacing: 10, 10
+        RelativeLayout:
+            Button:
+                text: "Back to Login page"
+                background_color: 1, 1, 1, 0
+                on_press: root.go_to_login()
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 1, 1, 1, 1
+                pos_hint: {'center_x': 0.78, 'center_y': 0.7}
+
         Label:
             text: "Insert your new id below :"
-        TextInput:
-            id: id
-            hint_text: "New id"
+            bold: True
+            font_size: '17sp'
+        RelativeLayout:
+            TextInput:
+                id: id
+                hint_text: "New id"
+                size_hint: 0.7, 0.4
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                background_color: 1, 1, 1, 0
+                foreground_color: [1, 1, 1, 1]
+                hint_text_color: [1, 1, 1, 1]
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        points: self.x + 8, self.y, self.x + self.width, self.y
+                        width: 1
         Label:
             text: "Insert your new password below :"
-        TextInput:
-            id: password
-            hint_text: "New password"
+            bold: True
+            font_size: '17sp'
+        RelativeLayout:
+            TextInput:
+                id: password
+                hint_text: "New password"
+                size_hint: 0.7, 0.4
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                background_color: 1, 1, 1, 0
+                foreground_color: [1, 1, 1, 1]
+                hint_text_color: [1, 1, 1, 1]
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        points: self.x + 8, self.y, self.x + self.width, self.y
+                        width: 1
         Label:
             id: username_taken
             text: ""
-        Button:
-            text: "Submit"
-            on_press: root.add_user(root.ids.id.text, root.ids.password.text)
+        RelativeLayout:
+            Button:
+                text: "Submit"
+                color: 36/255, 117/255, 173/255, 0.8
+                bold: True
+                size_hint: 0.3, 0.5
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                on_press: root.add_user(root.ids.id.text, root.ids.password.text)
+                opacity: 1 if self.state == 'normal' else 0.5
+                background_normal: ''
+                background_color: 255/255, 215/255, 0, 0.8
 
 <SignUpScreenSuccess>:
     GridLayout:
