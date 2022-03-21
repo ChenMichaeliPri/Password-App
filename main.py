@@ -4,12 +4,21 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 import json
 from datetime import datetime
+from abc import ABC, abstractmethod
 
 # Current Logged in user
 global current_logged_user
 
 # Synching with the kivi file
 Builder.load_file('design.kv')
+
+# Abstract class to avoid code duplication
+
+class CommonMethods(ABC):
+    @abstractmethod
+    def go_to_login(self):
+        self.manager.transition.direction = 'right'
+        self.manager.current = "login_screen"
 
 # Classes for the different pages of the app
 
@@ -27,7 +36,7 @@ class LoginScreen(Screen):
         else:
             self.ids.login_wrong.text = "Wrong id or password !"
 
-class SignUpScreen(Screen):
+class SignUpScreen(Screen, CommonMethods):
     # Adding user to json file database and documenting creation time
     def add_user(self, user_id, user_password):
         with open("users.json") as file:
@@ -37,7 +46,7 @@ class SignUpScreen(Screen):
             self.ids.username_taken.text = "Please select a different user id"
 
         elif user_id == "" or user_password == "":
-            self.ids.username_taken.text = "Please insert valid user and password"
+            self.ids.username_taken.text = "Please insert a valid user and password !"
 
         else:
             users[user_id] = {'user_id': user_id, 'user_password': user_password, 'created': datetime.now().strftime("%Y-%m-%d %H-%M-%S"), 'passwords': dict()}
@@ -47,14 +56,9 @@ class SignUpScreen(Screen):
                 # Transfers user to update page on successful regestriation
                 self.manager.current = "sign_up_screen_success"
 
-    def go_to_login(self):
-        self.manager.transition.direction = 'right'
-        self.manager.current = "login_screen"
+class SignUpScreenSuccess(Screen, CommonMethods):
 
-class SignUpScreenSuccess(Screen):
-    def go_to_login(self):
-        self.manager.transition.direction = 'right'
-        self.manager.current = "login_screen"
+class ForgotPassword(Screen, CommonMethods):
 
 class LoginScreenSuccess(Screen):
     def log_out(self):
@@ -68,21 +72,26 @@ class LoginScreenSuccess(Screen):
             passwords = json.load(file)
 
         if required_password in passwords[current_logged_user]["passwords"]:
-            required_password_output = passwords[current_logged_user]["passwords"][required_password]
+            self.ids.required_password_output.text = passwords[current_logged_user]["passwords"][required_password]
         else:
-            required_password_output = "Wrong password name, please try again !"
+            self.ids.required_password_output.text = "Wrong password name, please try again !"
 
     # Adds a new password to the database
     def add_password(self, new_password_name, new_password):
-        with open("users.json") as file:
-            passwords = json.load(file)
 
-        passwords[current_logged_user]["passwords"][new_password_name] = new_password
+        if (new_password_name == "" or new_password == ""):
+            self.ids.password_added.text = "Please insert a valid password !"
 
-        with open("users.json", 'w') as file:
-            json.dump(passwords, file)
+        else:
+            with open("users.json") as file:
+                passwords = json.load(file)
 
-        required_password_output = "New password added successfully"
+            passwords[current_logged_user]["passwords"][new_password_name] = new_password
+
+            with open("users.json", 'w') as file:
+                json.dump(passwords, file)
+
+            self.ids.password_added.text = "New password added successfully"
 
 class RootWidget(ScreenManager):
     pass
