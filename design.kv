@@ -1,4 +1,10 @@
 <LoginScreen>:
+    canvas.before:
+        Color:
+            rgba: (36/255, 117/255, 173/255, 0.8)
+        Rectangle:
+            pos: self.pos
+            size: self.size
     GridLayout:
         cols: 1
         GridLayout:
@@ -7,20 +13,39 @@
             spacing: 10, 10
             Label:
                 text: "Password Manager"
-                font_size: '30sp'
+                font_size: '35sp'
+                font_name: "Papyrus"
             RelativeLayout:
                 TextInput:
                     id: user_id
                     hint_text: "User id"
-                    size_hint: 0.8, 0.5
+                    size_hint: 0.7, 0.4
                     pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                    background_color: 1, 1, 1, 0
+                    foreground_color: [1, 1, 1, 1]
+                    hint_text_color: [1, 1, 1, 1]
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Line:
+                            points: self.x + 8, self.y, self.x + self.width - 20, self.y
+                            width: 1
             RelativeLayout:
                 TextInput:
                     id: user_password
                     password: True
                     hint_text: "User Password"
-                    size_hint: 0.8, 0.5
+                    size_hint: 0.7, 0.4
                     pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                    background_color: 1, 1, 1, 0
+                    foreground_color: [1, 1, 1, 1]
+                    hint_text_color: [1, 1, 1, 1]
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Line:
+                            points: self.x + 8, self.y, self.x + self.width - 20, self.y
+                            width: 1
             Label:
                 id: login_wrong
                 text: ""
@@ -31,6 +56,8 @@
                     pos_hint: {'center_x': 0.5, 'center_y': 0.6}
                     on_press: root.login(root.ids.user_id.text, root.ids.user_password.text)
                     opacity: 1 if self.state == 'normal' else 0.5
+                    background_color: 1, 1, 1, 0
+
         GridLayout:
             cols: 2
             size_hint: 0.2, 0.2
@@ -40,17 +67,19 @@
                 text: "Forgot Password ?"
                 background_color: 1, 1, 1, 0
                 opacity: 1 if self.state == 'normal' else 0.5
-                color: 0.1, 0.7, 1, 1
+                color: 1, 1, 1, 1
             Button:
                 text: "Sign Up"
                 background_color: 1, 1, 1, 0
                 on_press: root.sign_up()
                 opacity: 1 if self.state == 'normal' else 0.5
-                color: 0.1, 0.7, 1, 1
+                color: 1, 1, 1, 1
 
 <SignUpScreen>:
     GridLayout:
         cols: 1
+        padding: 15, 15
+        spacing: 10, 10
         Label:
             text: "Insert your new id below :"
         TextInput:
@@ -61,12 +90,12 @@
         TextInput:
             id: password
             hint_text: "New password"
-        Button:
-            text: "Submit"
-            on_press: root.add_user(root.ids.id.text, root.ids.password.text)
         Label:
             id: username_taken
             text: ""
+        Button:
+            text: "Submit"
+            on_press: root.add_user(root.ids.id.text, root.ids.password.text)
 
 <SignUpScreenSuccess>:
     GridLayout:
