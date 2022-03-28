@@ -4,7 +4,7 @@ A password managment app written in Python and Kivi. Demonstrates OOP principles
 
 After signing up and loging in, you are able to save passwords and get access to them.
 
-The app can be installed on Android after converting to apk file, it's slightly above 25 Mb so can not upload the apk file to github.
+The app can be installed on Android, an apk file attached to this project.
 
 Note that the app is not secured (no encryption). The app is a good basis for further development.
 
